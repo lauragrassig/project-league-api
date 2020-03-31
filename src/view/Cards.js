@@ -43,7 +43,7 @@ class Cards extends Component {
   render () {
     const { isLoading, error } = this.state;
     
-    if (isLoading) { return <p>Loading ...</p>; }
+    if (isLoading) { return <div className="loader"><div></div><div></div><div></div><div></div></div>; }
     if (error) { return <p>{error.message}</p>; }
 
       return (

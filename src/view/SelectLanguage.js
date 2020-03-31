@@ -26,7 +26,6 @@ class SelectLanguage extends Component {
     event.preventDefault();
     const { SelectedLanguage } = this.state;
     
-    //*~ Salvar no localStorage + Verificar se há valor + Alterar página
     if ( SelectedLanguage === '' || SelectedLanguage == null){
       this.setState({ error: true })
     } else {
@@ -50,7 +49,7 @@ class SelectLanguage extends Component {
   render () {
 
     const { isLoading, error } = this.state;
-    if (isLoading) { return <p>Loading ...</p>; }
+    if (isLoading) { return <div className="loader"><div></div><div></div><div></div><div></div></div>; }
 
     if (error) { return <div>
       <p>{error.message}</p>
@@ -59,7 +58,7 @@ class SelectLanguage extends Component {
     </div> } 
 
     return (
-      <div className="wrapper--language">
+      <div className="wrapper">
         <form onSubmit={this.onSearch}>
           <select onChange={this.onChange}>
             {this.state.languages.map((language, key) => (

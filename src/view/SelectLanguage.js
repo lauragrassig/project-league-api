@@ -18,7 +18,7 @@ class SelectLanguage extends Component {
     this.setState({ SelectedLanguage: event.target.value })
   }
 
-  returnLanguage = event => {
+  returnLanguage () {
     this.setState({ error: false })
   }
   

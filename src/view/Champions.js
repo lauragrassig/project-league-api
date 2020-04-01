@@ -40,13 +40,8 @@ class Champions extends Component {
   render () {
     const { isLoading, error, skin, selectedChampion } = this.state;
     const items = [];
-
-    // for (const [index, value] of skin.entries()) {
-    //   items.push(<div key={index}>{num}</div>)
-    // }
     
     for (const item of skin) {
-      console.log(item);
       items.push(
       <div> 
         <img key={item.id} alt={item.id} src={"http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"+ selectedChampion + "_" + item.num + ".jpg"} />
@@ -54,8 +49,6 @@ class Champions extends Component {
       </div>
       )
     }
-
-    // const mapped = champ.map(outerObj => outerObj.skins[0]);
   
     if (isLoading) { return <p>Loading ...</p>; }
     if (error) { return <p>{error.message}</p>; }
@@ -71,7 +64,9 @@ class Champions extends Component {
               <p>{champion.champion.title}</p>
               <p>{champion.champion.lore} </p>
               <button></button>
+
               {items}
+              
             </div>
           ))}
         </div>

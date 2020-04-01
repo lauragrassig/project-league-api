@@ -1,25 +1,49 @@
-// Language
+//*~ L a n g u a g e ~*//
 
 .form_language {
   max-width: 23rem;
-  width: 100%;
+  width: 90%;
   height: 13rem;
 
   border-radius: 0.5rem;
-  // background-color: rgba(81, 36, 144, 0.6);
-  background: linear-gradient(-45deg, rgba(114, 17, 175, 0.5), rgba(231, 60, 126, 0.5), rgba(3, 177, 177, 0.5), rgba(67, 18, 165, 0.5));
-	background-size: 400% 400%;
-  
+  padding: 1rem 2rem;
+
+  background: white;
+  box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.28);
+  background-size: 400% 400%;
+
   display: flex;
   justify-content: center;
   align-items: center;
 
   form {
-    width: 15rem;
-    height: 45%;
+    height: 65%;
 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
   }
+
+  &.-column {
+    flex-direction: column;
+    p {
+      color: #ed2553;
+      height: 2rem;
+    }
+  }
+}
+
+
+//*~ C h a m p i o n s  - C A R D S ~*//
+
+.wrapper_cards {
+  background-color: white;
+  border-radius: .5rem;
+
+  overflow: auto;
+  box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 0.28);
+  
+  padding: 1rem;
+  width: 95%;
+  height: 95vh;
 }

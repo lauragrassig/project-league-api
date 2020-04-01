@@ -1,19 +1,23 @@
 .select_default {
-  background: #6758a0;
-  border: none;
+  color: #ed2553;
   height: 2rem;
-  border-radius: 0.5rem;
-  color: white;
-
   padding: .1rem .5rem;
+  border: none;
+
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.2);
 }
 
 .button_default {
-  background: white;
-  color: #6758a0;
+  background: #ed2553;
+  color: white;
+
   outline: none;
   border: none;
   border-radius: 0.5rem;
-  font-size: 1.5rem;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+
+  transition: .5s ease;
   padding: 0.5rem;
+  width: 100%;
+  font-size: 1.5rem;
 }

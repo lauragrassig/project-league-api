@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import Loader from '../components/Loader';
+
 const LanguageAPI = "http://demo3139755.mockable.io/leagueLanguages";
 
 class SelectLanguage extends Component {
@@ -38,7 +40,7 @@ class SelectLanguage extends Component {
         if (res.ok) {
           return res.json();
         } else {
-          throw new Error('Algo errado');
+          throw new Error('Please try again');
         }
       })
       .then(result => this.setState({ languages: result.languages, isLoading: false }))
@@ -47,25 +49,19 @@ class SelectLanguage extends Component {
 
   render() {
     const { isLoading, error } = this.state;
-    if (isLoading) { return (
-      <div className="loader">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      )}
+
+    if (isLoading) { return <Loader /> }
 
     if (error) {
       return (
-      <div className="wrapper">
-        <div className="form_language">
-          <p>{error.message}</p>
-          <p>Por favor preencha novamente</p>
-          <button onClick={this.returnLanguage}>teste</button>
+        <div className="wrapper">
+          <div className="form_language -column">
+            <p>Please select the language</p>
+            <button className="button_default -w100" onClick={this.returnLanguage}>Ok!</button>
+          </div>
         </div>
-      </div>
-      )}
+      )
+    }
 
     return (
       <div className="wrapper">
@@ -77,7 +73,7 @@ class SelectLanguage extends Component {
               ))}
             </select>
             <button className="button_default" type="submit">
-              <span>Acessar</span>
+              <span>Search</span>
             </button>
           </form>
         </div>

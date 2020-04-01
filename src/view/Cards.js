@@ -47,7 +47,8 @@ class Cards extends Component {
     if (error) { return <p>{error.message}</p>; }
 
       return (
-        <div className="wrapper_cards">
+        <div className="wrapper">
+          <div className="wrapper_cards">
           {this.state.champions.map((champion, key) => (
             <div key={key}
             id={champion.champion.id}
@@ -58,6 +59,8 @@ class Cards extends Component {
               <img id={champion.champion.id} alt={champion.champion.key} src={ "http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + champion.champion.id + "_0.jpg" }/>
             </div>
           ))}
+          </div>
+
         </div>
         
       );

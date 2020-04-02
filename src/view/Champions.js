@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Loader from '../components/Loader';
 
 const BaseChampionAPI = "http://ddragon.leagueoflegends.com/cdn/10.6.1/data/";
 
@@ -8,6 +9,7 @@ class Champions extends Component {
     this.state = {
       champ: [],
       skin: [],
+      showResults: false,
       isLoading: true,
       error: null
     };
@@ -17,60 +19,101 @@ class Champions extends Component {
     const SelectedLanguage = this.props.location.state.SelectedLanguage
     const selectedChampion = this.props.location.state.selectedChampion
 
-    this.setState ({ selectedChampion: this.props.location.state.selectedChampion })
+    this.setState({ selectedChampion: this.props.location.state.selectedChampion })
+    this.setState({ SelectedLanguage: this.props.location.state.SelectedLanguage })
 
-    fetch(BaseChampionAPI + SelectedLanguage + '/champion/' + selectedChampion +'.json')
-    .then( res => {
-      if(res.ok) {
-        return res.json();
-      } else {
-        throw new Error ('Algo errado');
-      }
-    })
-    .then(result => this.setState({
+    fetch(BaseChampionAPI + SelectedLanguage + '/champion/' + selectedChampion + '.json')
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          throw new Error('Algo errado');
+        }
+      })
+      .then(result => this.setState({
         champ: Object.keys(result.data).reduce((array, key) => {
-          return [...array, {champion: result.data[key]}]
+          return [...array, { champion: result.data[key] }]
         }, []),
         isLoading: false,
-        skin: result.data[selectedChampion].skins})
+        skin: result.data[selectedChampion].skins
+      })
       )
-    .catch(error => this.setState ({ error, isLoading: false }));
+      .catch(error => this.setState({ error, isLoading: false }));
   }
 
-  render () {
-    const { isLoading, error, skin, selectedChampion } = this.state;
-    const items = [];
-    
-    for (const item of skin) {
-      items.push(
-      <div> 
-        <img key={item.id} alt={item.id} src={"http://ddragon.leagueoflegends.com/cdn/img/champion/loading/"+ selectedChampion + "_" + item.num + ".jpg"} />
-        <h2>{item.name}</h2>
-      </div>
-      )
+  showSkins = event => {
+    if (this.state.showResults === false) {
+      this.setState({ showResults: true });
+    } else {
+      this.setState({ showResults: false });
     }
-  
-    if (isLoading) { return <p>Loading ...</p>; }
+  }
+
+  buttonBack = event => {
+    this.props.history.goBack()
+  }
+
+  render() {
+    const { isLoading, error, skin, selectedChampion, showResults } = this.state;
+    const items = [];
+
+    if (showResults === true) {
+      for (const item of skin) {
+        items.push(
+          <div>
+            <img key={item.id} alt={item.id} src={"http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + selectedChampion + "_" + item.num + ".jpg"} />
+          </div>
+        )
+      }
+    }
+
+    if (isLoading) { return <Loader />; }
     if (error) { return <p>{error.message}</p>; }
 
-      return (
-        <div className="wrapper_cards">
+    return (
+      <div className="wrapper">
+        <div className="wrapper_cards -noScroll">
           {this.state.champ.map((champion, key) => (
             <div key={key}
-            id={champion.champion.id}
-            onClick={this.selectedChampion}
-            className="champion">
-              <h1 id={champion.champion.id}>{champion.champion.key} - {champion.champion.name}</h1>
-              <p>{champion.champion.title}</p>
-              <p>{champion.champion.lore} </p>
-              <button></button>
+              id={champion.champion.id}
+              className="champion">
 
-              {items}
-              
+              <div className="wrapper_select_back">
+                <div className="name">
+                  <h1 className="select">{champion.champion.id}</h1>
+                  <h5>{champion.champion.title}</h5>
+                </div>
+                <div className="back">
+                  <button className="button_default -sm" onClick={this.buttonBack}><i className="fas fa-chevron-left"></i> </button>
+                </div>
+              </div>
+
+              <div className="wrapper_informations">
+
+                <div className="image">
+                  <img key={champion.champion.id} alt={champion.champion.id} src={"http://ddragon.leagueoflegends.com/cdn/img/champion/loading/" + selectedChampion + "_0" + ".jpg"} />
+                </div>
+
+                <div className="informations">
+                  <h3>História</h3>
+                  <div className="information_desc">
+                    <p>{champion.champion.lore} </p>
+                  </div>
+
+                  <div className="information_skins">
+                    <button className="button_default" onClick={this.showSkins}>Show Skins</button>
+                    <div className="skins">
+                      {items}
+                    </div>
+                  </div>
+                </div>
+
+              </div>
             </div>
           ))}
         </div>
-      );
+      </div>
+    );
   }
 }
 
